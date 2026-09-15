@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Local SQLite database created by the default connection string
+jobtracker.db
+jobtracker.db-shm
+jobtracker.db-wal
