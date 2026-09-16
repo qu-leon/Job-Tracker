@@ -15,14 +15,14 @@ namespace JobTracker.Api.Data.Migrations
                 name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Industry = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Website = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    Location = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Industry = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,20 +33,20 @@ namespace JobTracker.Api.Data.Migrations
                 name: "Applications",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CompanyId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RoleTitle = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    JobUrl = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
-                    Source = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
-                    Location = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
-                    SalaryMin = table.Column<decimal>(type: "TEXT", precision: 12, scale: 2, nullable: true),
-                    SalaryMax = table.Column<decimal>(type: "TEXT", precision: 12, scale: 2, nullable: true),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true),
-                    Status = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    AppliedDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyId = table.Column<int>(type: "int", nullable: false),
+                    RoleTitle = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    JobUrl = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    SalaryMin = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: true),
+                    SalaryMax = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    AppliedDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,14 +63,14 @@ namespace JobTracker.Api.Data.Migrations
                 name: "Interviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ApplicationId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Stage = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    ScheduledAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    InterviewerName = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
-                    Outcome = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Notes = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationId = table.Column<int>(type: "int", nullable: false),
+                    Stage = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ScheduledAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    InterviewerName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Outcome = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -87,13 +87,13 @@ namespace JobTracker.Api.Data.Migrations
                 name: "StatusEvents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ApplicationId = table.Column<int>(type: "INTEGER", nullable: false),
-                    FromStatus = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
-                    ToStatus = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    ChangedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    Note = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationId = table.Column<int>(type: "int", nullable: false),
+                    FromStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    ToStatus = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ChangedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {

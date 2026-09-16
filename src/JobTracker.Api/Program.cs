@@ -15,21 +15,10 @@ builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new()
     Description = "Track companies, applications, interview stages, and status history."
 }));
 
-// Provider is swapped to SqlServer via configuration when running against Azure SQL.
-var provider = builder.Configuration.GetValue("Database:Provider", "Sqlite")!;
 var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddDbContext<JobTrackerDbContext>(options =>
-{
-    if (provider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase))
-    {
-        options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure());
-    }
-    else
-    {
-        options.UseSqlite(connectionString ?? "Data Source=jobtracker.db");
-    }
-});
+    options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));
 
 builder.Services.AddHealthChecks().AddDbContextCheck<JobTrackerDbContext>();
 
@@ -44,12 +33,6 @@ builder.Services.AddCors(o => o.AddPolicy(CorsPolicy, policy =>
 }));
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<JobTrackerDbContext>();
-    await db.Database.MigrateAsync();
-}
 
 app.UseSwagger();
 app.UseSwaggerUI(o =>
